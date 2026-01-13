@@ -1,0 +1,13 @@
+
+
+/* Ausgewähltes Symbol (gelber Rahmen) */
+.symbol-box.selected {
+    border-color: #FFD700;
+    background-color: rgba(255, 215, 0, 0.2);
+    transform: scale(1.1);
+}
+
+/* Hover-Effekt */
+.symbol-box:hover {
+    transform: scale(1.05);
+}

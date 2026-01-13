@@ -75,7 +75,7 @@ html, body {
   transition: opacity 0.2s ease; /* sanft einblenden */
 
   cursor: pointer;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 

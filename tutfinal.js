@@ -1,71 +1,47 @@
-window.addEventListener("DOMContentLoaded", () => {
-  // 1️⃣ HTML-Elemente
-  const textbox = document.getElementById("textbox");        // gesamte Textbox
-  const textElement = document.getElementById("textbox-text"); // Text, der getippt wird
-  const doneButton = document.getElementById("doneButton");   // DONE-Button
+// Warte bis die Seite geladen ist
+window.addEventListener("DOMContentLoaded", function() {
+  
+  // Hol die HTML-Elemente
+  var textbox = document.getElementById("textbox");
+  var textElement = document.getElementById("textbox-text");
+  var doneButton = document.getElementById("doneButton");
 
-  if (!textbox || !textElement || !doneButton) return;
+  // Hol den Text aus dem HTML
+  var text = textElement.innerHTML;
+  
+  // Mach alles unsichtbar am Anfang
+  textElement. innerHTML = "";
+  textbox. style.opacity = 0;
+  doneButton.style.opacity = 0;
 
-  // 2️⃣ Statusvariable
-  let isTyping = false; // true = gerade tippen
-
-  // 3️⃣ Text aus HTML holen
-  const firstText = textElement.innerHTML;  
-  textElement.innerHTML = ""; // Textfeld leer machen
-  textbox.style.opacity = 0;  // Box zunächst unsichtbar
-  doneButton.style.opacity = 0; 
-  doneButton.style.pointerEvents = "none"; // Button während Tippen deaktiviert
-
-  // 4️⃣ Typewriter-Funktion
-  function typeText(text) {
-    isTyping = true;
-    textElement.innerHTML = "";
-    doneButton.style.opacity = 0;
-    doneButton.style.pointerEvents = "none";
-
-    let i = 0;
-    const speed = 25; // Millisekunden pro Buchstabe
-
-    function typeWriter() {
+  // Warte kurz, dann zeig die Textbox
+  setTimeout(function() {
+    textbox.style.opacity = 1;
+    
+    // Tippe den Text Buchstabe für Buchstabe
+    var i = 0;
+    var speed = 25;
+    
+    function schreiben() {
       if (i < text.length) {
+        // Füge nächsten Buchstaben hinzu
         if (text[i] === "<") {
-          // HTML-Tags korrekt einfügen
-          const end = text.indexOf(">", i);
-          if (end === -1) {
-            textElement.innerHTML += "<";
-            i++;
-          } else {
-            textElement.innerHTML += text.slice(i, end + 1);
-            i = end + 1;
-          }
+          // HTML-Tags komplett einfügen
+          var end = text.indexOf(">", i);
+          textElement.innerHTML += text.slice(i, end + 1);
+          i = end + 1;
         } else {
           textElement.innerHTML += text[i];
           i++;
         }
-        setTimeout(typeWriter, speed);
+        setTimeout(schreiben, speed);
       } else {
-        // Text fertig getippt
-        isTyping = false;
-        doneButton.style.opacity = 1;          // Button sichtbar
-        doneButton.style.pointerEvents = "auto"; // Button klickbar
+        // Fertig!  Zeig den Button
+        doneButton.style.opacity = 1;
       }
     }
-
-    typeWriter();
-  }
-
-  // 5️⃣ Start: Textbox einblenden + ersten Text tippen
-  setTimeout(() => {
-    textbox.style.opacity = 1;
-    typeText(firstText);
+    
+    schreiben();
   }, 500);
 
-  // 6️⃣ DONE-Button Klick → Box ausblenden
-  doneButton.addEventListener("click", () => {
-    if (isTyping) return; // während Tippen keine Aktion erlaubt
-
-    // Box ausblenden
-    textbox.style.opacity = 0;
-    doneButton.style.pointerEvents = "none";
-  });
 });
