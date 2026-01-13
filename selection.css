@@ -1,13 +1,56 @@
-
-
-/* Ausgewähltes Symbol (gelber Rahmen) */
-.symbol-box.selected {
-    border-color: #FFD700;
-    background-color: rgba(255, 215, 0, 0.2);
-    transform: scale(1.1);
+/* Sun-Choice Position (drittes Symbol, oben rechts) */
+.sun-choice {
+    width: 40%;
+    height: auto;
+    position: absolute;
+    top: 15%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
 }
 
-/* Hover-Effekt */
-.symbol-box:hover {
-    transform: scale(1.05);
+/* Unsichtbare Auswahlbox */
+.selection-box {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: none;                    /* ← Kein Rahmen */
+    background: black;         /* ← Komplett durchsichtig */
+    opacity: 0.5;
+    pointer-events: none;
+    transform:  translate(-50%, -50%);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+/* Wackel-Animation für EAT und GAME */
+@keyframes wobble {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform:  translate(-50%, -50%) rotate(-5deg); }
+    50% { transform: translate(-50%, -50%) rotate(5deg); }
+    75% { transform:  translate(-50%, -50%) rotate(-3deg); }
+    100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+/* Dreh-Animation für SUN */
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Wenn EAT oder GAME ausgewählt ist - wackelt */
+.eat.selected,
+.game.selected {
+    animation: wobble 0.3s ease-in-out;
+}
+
+/* Wenn SUN ausgewählt ist - dreht sich */
+.sun-choice.selected {
+    animation: spin 0.6s ease-in-out;
+}
+/* Cursor-Pointer für klickbare Symbole */
+.symbol-item {
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 5;
 }
