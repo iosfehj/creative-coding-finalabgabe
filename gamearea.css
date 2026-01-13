@@ -1,0 +1,36 @@
+.game {
+    width: 40%;
+    height: auto;
+    position: absolute;
+    top: 85%;
+    left: 85%;
+    transform: translate(-50%, -50%);
+}
+
+.eat {
+    width: 40%;
+    height: auto;
+    position: absolute;
+    top: 87%;
+    left: 19%;
+    transform: translate(-50%, -50%);
+}
+
+
+.stats-area {
+  /* Inhalt der Stats-Area zentrieren */
+  display: flex; /* Elemente nebeneinander anordnen, unabhängig von mainstyle.css */
+  gap: 25px; /* Abstand zwischen den Elementen */
+
+  position: absolute;
+  top: 10%;
+  right: 27%;
+}
+
+
+.stats-name {
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+}
+

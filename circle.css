@@ -1,0 +1,24 @@
+
+.circle-bars {
+  position: absolute;
+  top: 14.5%;
+  left: 9%;
+
+  display: flex;
+  gap: 19px;             
+
+.circle-bar {
+  display: flex;
+  gap: 1px;               
+}
+
+
+
+.ecircle,
+.fcircle {
+  width: 9px;           
+  height: auto;
+}
+
+
+}

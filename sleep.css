@@ -1,0 +1,40 @@
+
+
+.star1 {
+  width: 3.5%;
+  height: auto;
+
+  position: absolute;
+  top: 8%;
+  right: 20%;
+}
+.star3 {
+  width: 3.5%;
+  height: auto;
+
+  position: absolute;
+  top: 12%;
+  right: 8%;
+}
+
+.star2 {
+  width: 3.5%;
+  height: auto;
+
+  position: absolute;
+  top: 6%;
+  right: 4%;
+}
+
+.sleepy {
+  width: 40%;
+  height: auto;
+
+  position: absolute;
+  top: 22%;
+  right:15%
+}
+
+
+
+

@@ -1,0 +1,23 @@
+.baby {
+    width: 60%;
+    height: auto;
+    position: absolute;
+    top: 55%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+}
+
+.babyname {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 25px;
+    color: black;
+}
+
+#textbox {
+  opacity: 0;           /* unsichtbar */
+  transition: opacity 0.125s; /* sanft einblenden */
+}
+
