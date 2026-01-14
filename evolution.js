@@ -26,17 +26,33 @@ function updatePetVisuals() {
             break;
 
         case "kind":
-            childVariant = childVariant || (Math.random() < 0.5 ? "childA" : "childB");
+            if (!childVariant) {
+                const rand = Math.random();
+                if (rand < 0.25) childVariant = "childA";
+                else if (rand < 0.5) childVariant = "childB";
+                else if (rand < 0.75) childVariant = "childC";
+                else childVariant = "childD";
+            }
             currentSrc = childVariant + ".png";
             currentClass = childVariant;
-            petNameDisplay.textContent = (childVariant === "childA") ? "Kidsy A" : "Kidsy B";
+            if (childVariant === "childA") petNameDisplay.textContent = "gigasy";
+            else if (childVariant === "childB") petNameDisplay.textContent = "sulleysy";
+            else if (childVariant === "childC") petNameDisplay.textContent = "bertisy";
+            else petNameDisplay.textContent = "patisy";
             break;
 
         case "adult":
-            const adultType = (childVariant === "childA") ? "adultA" : "adultB";
+            let adultType;
+            if (childVariant === "childA") adultType = "adultA";
+            else if (childVariant === "childB") adultType = "adultB";
+            else if (childVariant === "childC") adultType = "adultC";
+            else adultType = "adultD";
             currentSrc = adultType + ".png";
             currentClass = adultType;
-            petNameDisplay.textContent = (adultType === "adultA") ? "Mega-Sy" : "Giga-Sy";
+            if (adultType === "adultA") petNameDisplay.textContent = "Gigachad";
+            else if (adultType === "adultB") petNameDisplay.textContent = "Sulleyla";
+            else if (adultType === "adultC") petNameDisplay.textContent = "Mausbert";
+            else petNameDisplay.textContent = "Patrik";
             break;
     }
 

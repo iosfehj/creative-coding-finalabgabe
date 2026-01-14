@@ -1,12 +1,11 @@
 .pet {
   position: absolute; 
-  transform: translate(-50%, -50%); 
   height: auto;
  
 }
 
 /* BABY */
-.babie.baby {
+.pet.baby {
   width: 30px !important; /* !important erzwingt die Größe zum Testen */
   top: 100%;
   left: 100%;
@@ -37,7 +36,32 @@
 
 /* ADULT B */
 .pet.adultB {
+
+
   width: 130px;
   bottom: 145px;
+  left: 155px;
+
+
+}
+
+.pet.childC {
+  width: 140px;
+  left: 135px;
+}
+
+.pet.adultC {
+  width: 130px;
+  bottom: 145px;
+  left: 150px;
+}
+
+.pet.childD {
+  width: 80px;
+  left: 150px;
+}
+
+.pet.adultD {
+  width: 170px;
   left: 155px;
 }

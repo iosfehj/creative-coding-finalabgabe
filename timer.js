@@ -1,38 +1,62 @@
 /* timer.js */
+
 window.addEventListener("DOMContentLoaded", () => {
-    
-    // 1. STATS ABZUG & TODES-CHECK
+
+    const TIME_TO_KIND = 300000;
+    const TIME_TO_ADULT = 600000;
+    const DRAIN_INTERVAL = 60000;
+
+    function activateDeathScreen() {
+        const overlay = document.getElementById("death-overlay");
+        const currentPet = document.getElementById("pet");
+
+        if (overlay) {
+            // Nur den Schalter im CSS umlegen
+            overlay.classList.add("active");
+            
+            // Das lebendige Pet verstecken
+            if (currentPet) currentPet.style.display = "none";
+            
+            clearInterval(statTimer);
+        }
+    }
+
+    function checkDeathCondition() {
+        const bars = document.querySelectorAll(".circle-bar");
+        let gameOver = false;
+
+        bars.forEach(bar => {
+            const fullCircles = bar.querySelectorAll(".fcircle");
+            if (fullCircles.length === 0) {
+                gameOver = true;
+            }
+        });
+
+        if (gameOver) {
+            activateDeathScreen();
+        }
+    }
+
     function drainStats() {
         const bars = document.querySelectorAll(".circle-bar");
         bars.forEach(bar => {
             const fullCircles = bar.querySelectorAll(".fcircle");
             if (fullCircles.length > 0) {
                 const lastCircle = fullCircles[fullCircles.length - 1];
-                lastCircle.src = "emptycircle.png"; 
+                lastCircle.src = "emptycircle.png";
                 lastCircle.classList.remove("fcircle");
                 lastCircle.classList.add("ecircle");
             }
         });
-
-        // Prüfen ob alle Kreise in allen Leisten leer sind
-        const allRemaining = document.querySelectorAll(".fcircle");
-        if (allRemaining.length === 0) {
-            window.location.href = "death.html";
-        }
+        checkDeathCondition();
     }
-    
-    // Intervall starten
-    setInterval(drainStats, 60000);
 
-    // 2. EVOLUTIONS TIMER
-    const TIME_TO_KIND = 10000;  // 5 Min
-    const TIME_TO_ADULT = 20000; // 10 Min (nach Kind)
+    const statTimer = setInterval(drainStats, DRAIN_INTERVAL);
 
+    // Evolution
     setTimeout(() => {
         if (typeof startChildPhase === "function") {
             startChildPhase();
-            
-            // Zweiten Timer erst starten, wenn Kind-Phase erreicht
             setTimeout(() => {
                 if (typeof startAdultPhase === "function") {
                     startAdultPhase();
