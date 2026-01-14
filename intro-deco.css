@@ -1,4 +1,11 @@
+.moon {
+  width: 20%;
+  height: auto;
 
+  position: absolute;
+  top: 6%;
+  left: 75%;
+}
 
 .star1 {
   width: 3.5%;
@@ -26,15 +33,18 @@
   right: 4%;
 }
 
-.sleepy {
-  width: 40%;
+.sun {
+  width: 150px;
   height: auto;
-
   position: absolute;
-  top: 22%;
-  right:15%
+  top: -65px;
+  left: 190px;
 }
 
-
-
-
+.sunface {
+  width: 25px;
+  height: auto;
+  position: absolute;
+  bottom: 253px;
+  left: 247px;
+}

@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SYBAU</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="mainstyle.css">
   <link rel="stylesheet" href="gamearea.css">
   <link rel="stylesheet" href="birth.css">
   <link rel="stylesheet" href="circle.css">
-  <link rel="stylesheet" href="selection.css">
-  <link rel="stylesheet" href="eat.css">
-  <link rel="stylesheet" href="play.css">
   <link rel="stylesheet" href="pet.css">
+  <link rel="stylesheet" href="selection.css">
+  <link rel="stylesheet" href="death.css">
 
 
 
@@ -55,39 +53,35 @@
     <img src="game.png" class="symbol-item game" data-index="1" alt="Play">
     <img src="sunwface-no-bg.png" class="symbol-item sun" data-index="2" alt="sun">
 
-    <!-- Box -->
-    <div class="selection-box"></div>
-
     <div class="stats-area">
       <div class="stats-name">HUNGER</div>
       <div class="stats-name">ENERGY</div>
       <div class="stats-name">HAPPINESS</div>
     </div>
 
-    <!-- Pop-ups -->
-    <div class="window"> <!-- Eat -->
-        <img src="burgir.png" class="burgir">
+    <div class="game-area death-mode">
+        <div class="death-text">GAME OVER</div>
     </div>
 
-    <div class="pwindow">
-        <div id="play-msg">Click A or D!</div>
-        <div id="play-score">round: 0/3</div>
-        <div class="window-line"></div>
-        <img src="adultC.png" alt="baby" class="babie" />
+  </div>
 
-        <div class="balloon-container">
-            <img src="bubble-no-bg.png" alt="balloon" class="balloon" />
-            <div class="balloon-text"></div>
-        </div>
-    </div> 
-
+  <div class="textbox" id="textbox">
+    <span id="textbox-text">
+      Wow, seems like your pet has passed away... 
+    </span>
+    <div class="next-box">
+     <a href="startingpage.html" class="next-link">NEXT</a>
+    </div>
   </div>
 
   <footer class="footer">
     <p>Thi Huong Ly Dinh - Matrikel-Nr: 287935</p>
   </footer>
 
+  <script src="evolution.js"></script>
+  <script src="timer.js"></script>
   <script src="selecetion.js"></script>
+  <script src="textbox.js"></script>
  
 </body>
 </html> 

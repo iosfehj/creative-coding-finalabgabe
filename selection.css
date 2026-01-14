@@ -1,56 +1,93 @@
-/* Sun-Choice Position (drittes Symbol, oben rechts) */
-.sun-choice {
-    width: 40%;
-    height: auto;
-    position: absolute;
-    top: 15%;
-    left: 90%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s ease;
-}
-
-/* Unsichtbare Auswahlbox */
-.selection-box {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border: none;                    /* ← Kein Rahmen */
-    background: black;         /* ← Komplett durchsichtig */
-    opacity: 0.5;
-    pointer-events: none;
-    transform:  translate(-50%, -50%);
-    transition: all 0.2s ease;
-    z-index: 10;
-}
-
-/* Wackel-Animation für EAT und GAME */
-@keyframes wobble {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    25% { transform:  translate(-50%, -50%) rotate(-5deg); }
-    50% { transform: translate(-50%, -50%) rotate(5deg); }
-    75% { transform:  translate(-50%, -50%) rotate(-3deg); }
-    100% { transform: translate(-50%, -50%) rotate(0deg); }
-}
-
-/* Dreh-Animation für SUN */
-@keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Wenn EAT oder GAME ausgewählt ist - wackelt */
-.eat.selected,
-.game.selected {
-    animation: wobble 0.3s ease-in-out;
-}
-
-/* Wenn SUN ausgewählt ist - dreht sich */
-.sun-choice.selected {
-    animation: spin 0.6s ease-in-out;
-}
-/* Cursor-Pointer für klickbare Symbole */
+/* Symbole */
 .symbol-item {
-    cursor: pointer;
-    pointer-events: auto;
-    z-index: 5;
+  position: absolute;
+  z-index: 5;
+}
+
+/* Sonne */
+.sun {
+  width: 80px;
+  bottom: 223px;
+  left: 220px;
+  position: absolute;
+}
+
+.moon {
+  width: 20%;
+  height: auto;
+
+  position: absolute;
+  top: 6%;
+  left: 75%;
+}
+
+.sleepy {
+  width: 40%;
+  height: auto;
+
+  position: absolute;
+  top: 22%;
+  right:15%
+}
+
+/* Auswahlbox */
+.selection-box {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+/* Game Area dunkler bei Sleep Mode */
+.game-area.dark {
+  background-color: rgba(0,0,0,0.6);
+  transition: background-color 0.4s ease;
+}
+
+/* Pop-ups */
+.window, .play-window {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  border: 3px solid black;
+  background: white;
+  z-index: 20;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Wackeln */
+@keyframes wobble {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  25% { transform: translate(-50%,-50%) rotate(-5deg); }
+  50% { transform: translate(-50%,-50%) rotate(5deg); }
+  75% { transform: translate(-50%,-50%) rotate(-3deg); }
+  100% { transform: translate(-50%,-50%) rotate(0deg); }
+}
+
+@keyframes wobble-sun {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.symbol-item.eat.selected,
+.symbol-item.game.selected {
+  animation: wobble 0.3s ease-in-out;
+  transform-origin: center bottom;
+}
+
+.symbol-item.sun.selected {
+  animation: wobble-sun 0.3s ease-in-out;
+  transform-origin: center bottom;
 }

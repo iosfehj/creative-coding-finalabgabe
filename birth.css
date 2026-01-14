@@ -1,4 +1,4 @@
-.baby {
+.pet {
     width: 60%;
     height: auto;
     position: absolute;
@@ -7,7 +7,7 @@
     transform: translate(-50%, -50%);
 }
 
-.babyname {
+.pet-name {
     position: absolute;
     top: 90%;
     left: 50%;

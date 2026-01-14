@@ -1,115 +1,132 @@
-// Warte bis die Seite geladen ist
-window.addEventListener("DOMContentLoaded", function() {
-    
-    // Hol alle Symbole und die Auswahlbox
-    var symbols = document.querySelectorAll(".symbol-item");
-    var selectionBox = document.querySelector(".selection-box");
-    
-    // Welches Symbol ist ausgewählt?  (0 = EAT, 1 = GAME, 2 = SUN)
-    var selected = 0;
-    
-    // Feste Positionen der 3 Symbole (passend zur HTML-Reihenfolge)
-    var positions = [
-        { top:  "87%", left: "19%" },  // 0: EAT (unten links)
-        { top: "85%", left: "85%" },  // 1: GAME (unten rechts)
-        { top: "15%", left: "90%" }   // 2: SUN-CHOICE (oben rechts)
-    ];
-    
-    // Bewege die Selection-Box zur aktuellen Position
-    function updateSelection() {
-        // Entferne Wackel-Animation von allen Symbolen
-        symbols.forEach(function(symbol) {
-            symbol.classList.remove("selected");
-        });
-        
-        // Füge Wackel-Animation zum ausgewählten Symbol hinzu
-        symbols[selected].classList.add("selected");
-        
-        // Bewege die Box zur Position des Symbols
-        var pos = positions[selected];
-        selectionBox.style.top = pos.top;
-        selectionBox.style.left = pos.left;
+/* selection.js */
+window.addEventListener("DOMContentLoaded", () => {
+  const box = document.querySelector(".selection-box");
+  const gameArea = document.querySelector(".game-area");
+  const eatPopup = document.querySelector(".window");
+  const playPopup = document.querySelector(".pwindow");
+  const sun = document.querySelector(".sun");
+  const burgirImg = document.querySelector(".burgir");
+
+  if (!box || !gameArea || !eatPopup || !playPopup || !sun) return;
+
+  eatPopup.style.display = "none";
+  playPopup.style.display = "none";
+
+  let currentIndex = 0;
+  let activeMode = null; 
+  let miniRounds = 0;    
+  let canPlayTurn = true; 
+
+  const symbols = [
+    document.querySelector(".eat"),
+    document.querySelector(".game"),
+    sun
+  ];
+
+  /* STATS AUFFÜLLEN */
+  function fillStat(index) {
+    const bars = document.querySelectorAll(".circle-bar");
+    const bar = bars[index];
+    const firstEmpty = bar.querySelector(".ecircle"); 
+    if (firstEmpty) {
+      firstEmpty.src = "filledcircle.png";
+      firstEmpty.classList.remove("ecircle");
+      firstEmpty.classList.add("fcircle");
     }
-    
-    // Zeige Box beim Start auf dem ersten Symbol (EAT)
-    updateSelection();
-    
-    // Tastatur-Steuerung
-    document.addEventListener("keydown", function(event) {
-        
-        var key = event.key.toLowerCase();
-        
-        // A-Taste = vorheriges Symbol
-        if (key === "a") {
-            selected = selected - 1;
-            
-            // Wenn unter 0, springe zum letzten Symbol
-            if (selected < 0) {
-                selected = 2; // SUN
-            }
-            
-            updateSelection();
-            event.preventDefault();
-        }
-        
-        // D-Taste = nächstes Symbol
-        if (key === "d") {
-            selected = selected + 1;
-            
-            // Wenn über 2, springe zum ersten Symbol
-            if (selected > 2) {
-                selected = 0; // EAT
-            }
-            
-            updateSelection();
-            event.preventDefault();
-        }
-        
-        // W-Taste = nach oben (zu SUN wenn unten)
-        if (key === "w") {
-            if (selected === 0 || selected === 1) {
-                // Von EAT oder GAME → zu SUN
-                selected = 2;
-                updateSelection();
-            }
-            event.preventDefault();
-        }
-        
-        // S-Taste = nach unten (zu EAT/GAME wenn oben)
-        if (key === "s") {
-            if (selected === 2) {
-                // Von SUN → zu EAT
-                selected = 0;
-                updateSelection();
-            }
-            event.preventDefault();
-        }
-        
-        // Leertaste = Bestätigen
-        if (key === " " || event.code === "Space") {
-            // Hol die Zielseite vom Symbol
-            var page = symbols[selected].getAttribute("data-page");
-            
-            // Gehe zur Seite
-            window.location.href = page;
-            
-            event.preventDefault();
-        }
-        
+  }
+
+  /* BURGER KLICK */
+  if (burgirImg) {
+    burgirImg.addEventListener("click", () => {
+      if (activeMode === "eat") {
+        fillStat(0); // Hunger
+        burgirImg.style.transform = "scale(1.2)";
+        setTimeout(() => burgirImg.style.transform = "scale(1)", 100);
+      }
     });
+  }
+
+  /* NAVIGATION */
+  function updateBoxPosition() {
+    const rect = gameArea.getBoundingClientRect();
+    const positions = [
+      { left: 50, top: rect.height - 50 },               
+      { left: rect.width - 50, top: rect.height - 50 }, 
+      { left: rect.width - 50, top: 50 }                 
+    ];
+    const pos = positions[currentIndex];
+    box.style.left = pos.left + "px";
+    box.style.top = pos.top + "px";
+
+    symbols.forEach(s => s && s.classList.remove("selected"));
+    if (symbols[currentIndex]) symbols[currentIndex].classList.add("selected");
+  }
+
+  /* MINIGAME */
+  function playTurn() {
+    if (!canPlayTurn) return;
+    canPlayTurn = false;
+    const bubbleText = document.querySelector(".balloon-text");
+    const scoreDisplay = document.querySelector("#play-score");
     
-    // Bonus: Klick auf Symbol
-    symbols.forEach(function(symbol, index) {
-        symbol.addEventListener("click", function() {
-            selected = index;
-            updateSelection();
-            
-            // Nach kurzer Wackel-Animation zur Seite gehen
-            setTimeout(function() {
-                var page = symbol.getAttribute("data-page");
-                window.location.href = page;
-            }, 300);
-        });
-    });
-    
+    miniRounds++;
+    bubbleText.style.visibility = "visible";
+    bubbleText.innerText = Math.random() < 0.5 ? "←" : "→";
+    scoreDisplay.innerText = `round: ${miniRounds}/3`;
+
+    if (miniRounds >= 3) fillStat(2); // Happiness
+
+    setTimeout(() => {
+      bubbleText.style.visibility = "hidden";
+      if (miniRounds >= 3) {
+          miniRounds = 0;
+          scoreDisplay.innerText = "round: 0/3";
+      }
+      canPlayTurn = true;
+    }, 600);
+  }
+
+  /* KEYBOARD */
+  window.addEventListener("keydown", (e) => {
+    if (activeMode === "play" && (e.code === "KeyA" || e.code === "KeyD")) {
+      playTurn(); return;
+    }
+    if (activeMode && (e.code === "KeyA" || e.code === "KeyD")) return;
+
+    if (e.code === "KeyA") {
+      currentIndex = (currentIndex - 1 + 3) % 3;
+      updateBoxPosition();
+    } else if (e.code === "KeyD") {
+      currentIndex = (currentIndex + 1) % 3;
+      updateBoxPosition();
+    }
+
+    if (e.code === "Space") {
+      if (currentIndex === 0) { // EAT
+        activeMode = (activeMode === "eat") ? null : "eat";
+        eatPopup.style.display = activeMode ? "flex" : "none";
+      } else if (currentIndex === 1) { // PLAY
+        activeMode = (activeMode === "play") ? null : "play";
+        playPopup.style.display = activeMode ? "flex" : "none";
+      } else if (currentIndex === 2) { // SLEEP
+        if (activeMode === "sleep") {
+          gameArea.classList.remove("dark");
+          sun.style.display = "block";
+          document.querySelectorAll(".moon, .sleepy").forEach(el => el.remove());
+          activeMode = null;
+        } else if (!activeMode) {
+          activeMode = "sleep";
+          gameArea.classList.add("dark");
+          sun.style.display = "none";
+          fillStat(1); // Energy
+          const m = document.createElement("img"); m.src="moon.png"; m.className="moon";
+          const s = document.createElement("img"); s.src="sleepy.png"; s.className="sleepy";
+          gameArea.append(m, s);
+        }
+      }
+    }
+  });
+
+  window.addEventListener("resize", updateBoxPosition);
+  updateBoxPosition();
 });

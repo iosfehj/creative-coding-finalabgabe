@@ -7,19 +7,11 @@
   left: 75%;
 }
 
-.sun {
-  width: 150px;
+.sleepy {
+  width: 40%;
   height: auto;
-  position: absolute;
-  top: -65px;
-  left: 190px;
-}
 
-
-.sunface {
-  width: 25px;
-  height: auto;
   position: absolute;
-  bottom: 253px;
-  left: 247px;
+  top: 22%;
+  right:15%
 }
