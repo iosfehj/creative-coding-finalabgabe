@@ -1,45 +1,110 @@
+/* Death Overlay - dunkler Hintergrund INNERHALB game-area */
 #death-overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: none; /* Aus */
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 3000;
+    display: none;  /* Standardmäßig versteckt */
     justify-content: center;
     align-items: center;
-    z-index: 2000;
-    flex-direction: column;
+    border: none;
 }
 
 #death-overlay.active {
-    display: flex; /* An */
+    display: flex;  /* Sichtbar wenn active */
 }
 
-.death-title {
-    color: white;
-    font-size: 50px;
-    margin-bottom: 20px;
-}
-
-.death-textbox {
-    background: white;
-    padding: 20px;
-    border: 3px solid black;
-    width: 70%;
-    text-align: center;
-}
-
-.next-box {
-    margin-top: 30px;
-    background: white;
-    padding: 10px 25px;
-    border: 2px solid black;
-}
-
-.next-link {
-    text-decoration: none;
-    color: black;
+/* GAME OVER Text */
+.death-text {
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: red;
     font-weight: bold;
-    font-size: 20px;
+    font-family: 'Bryndan Write', sans-serif;
+    z-index: 3001;
+}
+
+/* Death Textbox - AUSSERHALB game-area */
+#death-textbox {
+    width: 520px;
+    padding: 20px;
+    
+    background: black;
+    color: white;
+    border: 2px solid black;
+    
+    font-size: 16px;
+    line-height: 1.5;
+    
+    box-sizing: border-box;
+    box-shadow: inset 0 0 0 3px white;  /* Weißer Innenrahmen */
+    
+    /* Position unterhalb der game-area */
+    position: absolute;
+    top: 50%;
+    margin-top:  170px;  /* 150px (Hälfte von game-area) + 20px Abstand */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* Versteckt bis aktiviert */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.125s;
+}
+
+#death-textbox.active {
+    opacity: 1;
+    pointer-events:  auto;
+}
+
+/* Text innerhalb der Textbox */
+#death-text {
+    display: block;
+    margin:  0;
+}
+
+/* NEXT Button INNERHALB der Textbox */
+#death-next-box {
+    position:  absolute;
+    bottom: 10px;
+    right: 10px;
+    
+    background:  white;
+    color: black;
+    padding: 6px 14px;
+    font-size: 14px;
+    
+   
+    
+    cursor: pointer;
+    pointer-events: auto;
+    
+    /* Versteckt bis aktiviert */
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+#death-next-box.active {
+    opacity: 1;
+}
+
+/* Link innerhalb des NEXT Buttons */
+#death-next-box a {
+    text-decoration: none;
+    display: block;
+}
+
+/* Hover Effect */
+#death-next-box:hover {
+    background-color: black;
+}
+
+#death-next-box:hover a {
+    color: white;
 }
