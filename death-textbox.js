@@ -1,29 +1,30 @@
-/* death-textbox.js - Typewriter ohne Flackern */
+/* death-textbox.js - Mit CSS Opacity */
 
 window.addEventListener("DOMContentLoaded", () => {
   
-  // Elemente holen
   const textbox = document.getElementById("death-textbox");
   const textElement = document.getElementById("death-text");
   const nextBox = document.getElementById("death-next-box");
 
-  // Prüfen ob alles da ist
   if (!textbox || !textElement || !nextBox) {
     console.error("Death Textbox Elemente fehlen!");
     return;
   }
 
-  // Text sofort speichern und leeren
+  // Text speichern, dann leeren
   const originalText = textElement.textContent.trim();
-  textElement.textContent = "";  // ← SOFORT LEEREN beim Laden! 
+  textElement.textContent = "";
+  
+  // Opacity auf 1 setzen (CSS startet mit 0)
+  textElement.style.opacity = 1;
 
   // === TYPEWRITER FUNKTION ===
   function startTypewriter(text) {
-    textElement.textContent = "";  // Sicherstellen dass leer
+    textElement.textContent = "";
     nextBox.style. opacity = 0;
 
     let index = 0;
-    const speed = 30; // Millisekunden pro Buchstabe
+    const speed = 30;
 
     function type() {
       if (index < text.length) {
@@ -31,7 +32,6 @@ window.addEventListener("DOMContentLoaded", () => {
         index++;
         setTimeout(type, speed);
       } else {
-        // Fertig - NEXT Button anzeigen
         nextBox.style.opacity = 1;
       }
     }
@@ -41,14 +41,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // === TEXTBOX AKTIVIEREN ===
   window.activateDeathTextbox = function() {
-    // Textbox anzeigen
-    textbox.classList.add("active");
+    textbox.classList. add("active");
     
-    // Kurze Verzögerung, dann Typewriter
     setTimeout(() => {
       startTypewriter(originalText);
     }, 300);
   };
 
-  console.log("✅ death-textbox. js geladen");
+  console.log("✅ death-textbox.js geladen");
 });
